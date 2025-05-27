@@ -36,5 +36,7 @@ jobs:
 
       - name: Run command
         uses: matlab-actions/run-command@v2
+        env:
+          MLM_LICENSE_TOKEN: ${{ secrets.MATLAB_TOKEN }}
         with:
           command: magic(3)
