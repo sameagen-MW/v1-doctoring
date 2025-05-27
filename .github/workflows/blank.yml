@@ -1,0 +1,40 @@
+name: MATLAB Build
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      # Set up MATLAB deps
+      - run: |
+          wget https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh
+          chmod +x install.sh
+          sudo ./install.sh
+          rm install.sh
+
+      # Get ematlab
+      - run: |
+          wget https://ssd.mathworks.com/supportfiles/ci/ephemeral-matlab/v0/install.sh
+          chmod +x install.sh
+          sudo ./install.sh --release R2024a
+          echo "PATH=$PATH:/tmp/ephemeral_matlab_root/bin" >> "$GITHUB_ENV"
+
+      # Get matlab-batch
+      - run: |
+          wget https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v1/glnxa64/matlab-batch
+          chmod +x matlab-batch
+          echo "PATH=$PATH:$PWD" >> "$GITHUB_ENV"
+
+      - run: |
+          which matlab-batch
+          which matlab
+
+      - name: Run command
+        uses: matlab-actions/run-command@v2
+        with:
+          command: magic(3)
