@@ -11,18 +11,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       # Set up MATLAB deps
-      - run: |
-          wget https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh
-          chmod +x install.sh
-          sudo ./install.sh
-          rm install.sh
+      - run: wget -q0- https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh | sudo bash
 
       # Get ematlab
       - run: |
           wget https://ssd.mathworks.com/supportfiles/ci/ephemeral-matlab/v0/install.sh
           chmod +x install.sh
           sudo ./install.sh --release R2024a
-          echo "PATH=$PATH:/tmp/ephemeral_matlab_root/bin" >> "$GITHUB_ENV"
 
       # Get matlab-batch
       - run: |
