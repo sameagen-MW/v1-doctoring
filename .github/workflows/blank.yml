@@ -13,11 +13,10 @@ jobs:
       # Set up MATLAB deps
       - run: wget -qO- https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh | sudo bash
 
-      # Get ematlab
+      # Get mpm
       - run: |
-          wget https://ssd.mathworks.com/supportfiles/ci/ephemeral-matlab/v0/install.sh
-          chmod +x install.sh
-          sudo ./install.sh --release R2024a
+          wget https://www.mathworks.com/mpm/glnxa64/mpm
+          chmod +x mpm
 
       # Get matlab-batch
       - run: |
@@ -26,8 +25,9 @@ jobs:
           echo "PATH=$PATH:$PWD" >> "$GITHUB_ENV"
 
       - run: |
-          which matlab-batch
-          which matlab
+          mpm download --release=R2024a --products=MATLAB --destination="./matlab"
+          time mpm install --source="./matlab" --destination="./matlab-install"
+          echo "PATH=$PATH:./matlab-install" >> "$GITHUB_ENV"
 
       - name: Run command
         uses: matlab-actions/run-command@v2
