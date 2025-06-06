@@ -25,9 +25,9 @@ jobs:
           echo "PATH=$PATH:$PWD" >> "$GITHUB_ENV"
 
       - run: |
-          mpm download --release=R2024a --products=MATLAB --destination="./matlab"
-          time mpm install --source="./matlab" --products=MATLAB --destination="./matlab-install"
-          echo "PATH=$PATH:./matlab-install" >> "$GITHUB_ENV"
+          time mpm download --release=R2024a --products=MATLAB Simulink --destination="./matlab"
+          time mpm install --source="./matlab" --products=MATLAB Simulink --destination="./matlab-install"
+          echo "PATH=$PATH:./matlab-install/bin" >> "$GITHUB_ENV"
 
       - name: Run command
         uses: matlab-actions/run-command@v2
