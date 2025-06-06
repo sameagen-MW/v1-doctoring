@@ -26,7 +26,7 @@ jobs:
 
       - run: |
           mpm download --release=R2024a --products=MATLAB --destination="./matlab"
-          time mpm install --source="./matlab" --destination="./matlab-install"
+          time mpm install --source="./matlab" --products=MATLAB --destination="./matlab-install"
           echo "PATH=$PATH:./matlab-install" >> "$GITHUB_ENV"
 
       - name: Run command
