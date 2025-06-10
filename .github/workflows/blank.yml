@@ -67,7 +67,7 @@ jobs:
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@source_test
         with:
-          source: ".\matlab"
+          source: .\matlab
           products: "MATLAB Simulink"
 
       - name: Run command
