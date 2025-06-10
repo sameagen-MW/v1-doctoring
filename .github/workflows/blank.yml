@@ -24,10 +24,13 @@ jobs:
           chmod +x matlab-batch
           echo "PATH=$PATH:$PWD" >> "$GITHUB_ENV"
 
-      - run: |
-          time mpm download --release=R2024a --products=MATLAB Simulink --destination="./matlab"
-          time mpm install --source="./matlab" --products=MATLAB Simulink --destination="./matlab-install"
-          echo "PATH=$PATH:./matlab-install/bin" >> "$GITHUB_ENV"
+      - run: mpm download --release=R2024a --products=MATLAB Simulink --destination="./matlab"
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@source_test
+        with:
+          source: "./matlab"
+          products: "MATLAB Simulink"
 
       - name: Run command
         uses: matlab-actions/run-command@v2
