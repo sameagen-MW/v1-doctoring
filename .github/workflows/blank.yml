@@ -8,13 +8,8 @@ on:
 
 jobs:
   build:
-  # A job will run for all combinations of OS and release present in the matrix
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
- 
     # The type of runner that the job will run on
-    runs-on: ${{ matrix.os }}    
+    runs-on: ubuntu-lastest    
     steps:
       # Set up MATLAB deps
       - run: wget -qO- https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh | sudo bash
@@ -38,13 +33,36 @@ jobs:
           MLM_LICENSE_TOKEN: ${{ secrets.MATLAB_TOKEN }}
         with:
           command: magic(3)
+
+  mac-build:
+    runs-on: mac-latest
+    steps:
+      # Get MPM
+      - run: |
+          wget https://www.mathworks.com/mpm/maca64/mpm
+          chmod +x mpm
+
+      - run: mpm download --release=R2024a --products=MATLAB Simulink --destination="./matlab"
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@source_test
+        with:
+          source: "./matlab"
+          products: "MATLAB Simulink"
+
+      - name: Run command
+        uses: matlab-actions/run-command@v2
+        env:
+          MLM_LICENSE_TOKEN: ${{ secrets.MATLAB_TOKEN }}
+        with:
+          command: magic(3)
           
   windows-build:
     runs-on: windows-latest
     steps: 
       - run: Invoke-WebRequest -Uri https://www.mathworks.com/mpm/win64/mpm -OutFile mpm.exe
 
-      - run: mpm download --release=R2024a --products=MATLAB Simulink --destination="./matlab"
+      - run: .\mpm.exe download --release=R2024a --products=MATLAB Simulink --destination="./matlab"
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@source_test
