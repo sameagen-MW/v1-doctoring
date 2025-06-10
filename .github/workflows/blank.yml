@@ -62,12 +62,12 @@ jobs:
     steps: 
       - run: Invoke-WebRequest -Uri https://www.mathworks.com/mpm/win64/mpm -OutFile mpm.exe
 
-      - run: .\mpm.exe download --release=R2024a --products=MATLAB Simulink --destination=$pwd\matlab
+      - run: .\mpm.exe download --release=R2024a --products=MATLAB Simulink --destination=C:\a\v1-doctoring\v1-doctoring\matlab
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@source_test
         with:
-          source: $pwd\matlab
+          source: C:\a\v1-doctoring\v1-doctoring\matlab
           products: "MATLAB Simulink"
 
       - name: Run command
