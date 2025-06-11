@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-lastest    
+    runs-on: ubuntu-latest    
     steps:
       # Set up MATLAB deps
       - run: wget -qO- https://ssd.mathworks.com/supportfiles/ci/matlab-deps/v0/install.sh | sudo bash
@@ -35,7 +35,7 @@ jobs:
           command: magic(3)
 
   mac-build:
-    runs-on: mac-latest
+    runs-on: macos-latest
     steps:
       # Get MPM
       - run: |
