@@ -42,7 +42,7 @@ jobs:
           wget https://www.mathworks.com/mpm/maca64/mpm
           chmod +x mpm
 
-      - run: ./mpm download --release=R2024a --products=MATLAB Simulink --destination="./matlab"
+      - run: ./mpm download --release=R2024a --products=MATLAB Simulink --destination="./matlab.app"
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@source_test
